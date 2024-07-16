@@ -15,10 +15,15 @@ Answer----
 
 a. CC (Challenge Collapsar) attack 
 
-Cause: cc attack targets the application layer by sending high number of HTTP GET or      POST request to exhasust the server resources. 
+Cause: cc attack targets the application layer by sending high number of HTTP GET or POST request to exhasust the server resources. 
 
 Identify: it can be identified by unusual search in challenge response traffic and a significant increase in server resource utilisation without a proportional increase in legitimate user activity.
 
 effect: the server become overwell leading to degraded performance slow response time and potential down time for legitimate user. 
 
 mitigation: implement rate limiting use CAPTCHAs to differentiate between boards and humans and deploy web application firewall to filter malicious traffic.
+
+
+b. SYN Flood attack
+
+cause: 
