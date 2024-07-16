@@ -17,6 +17,9 @@ Share the steps and screenshots of the configuration and the result identifying 
 
 # load balancing final output
 
+![image](https://github.com/user-attachments/assets/d1c9263b-05e7-40d7-a308-27911540acf9)
+
+
 ![image](https://github.com/user-attachments/assets/09377688-8b19-452d-ad47-260447e6156f)
 
 
