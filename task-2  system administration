@@ -1,0 +1,8 @@
+Section 2): Test check system administration skills:
+2. On an Ubuntu system install Nginx 1.23.1 from a source file (Not using APT) and
+create a small test infrastructure on your virtual environment to perform a load
+balancing of a site example.com using Nginx.
+Share the steps and screenshots of the configuration and the result identifying the load
+has been distributed among backend servers. 
+
+
