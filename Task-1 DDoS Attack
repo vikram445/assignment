@@ -26,4 +26,21 @@ mitigation: implement rate limiting use CAPTCHAs to differentiate between boards
 
 b. SYN Flood attack
 
-cause: 
+cause: a SYN flood attack exploit that is TCP handshake process by sending a large number of SYN request to a server but never completing the handshake consuming server resources.
+
+identify: it can be identified by a high number of half open connections and a large number of syn packets without corresponding acknowledgement responses. 
+
+effect: the server connection table fill up preventing legitimate user from establishing new connection leading to a service unavailability. 
+
+mitigation: use syn cookies increase the backlog q size deploy firewall with syn flood protection and employ intrusion detection system to identify and block suspicious IP addresses.
+
+
+c. SSL attack 
+
+cause: an SSL attack is a type of dead of attack that target the source socket layer or transport layer security encryption protocol used to secure online transaction the attackers and a large number of SSL / TLS and shake request to the website which can cause the website SSL/TLS termination point to become overwhelmed.
+
+identify: to identify an SSL attack we can look for a sudden search in SSL/TSL handshake request to our website acompany by a high number of field connection we may also notice that the traffic is coming from a single IP address or a small range of IP addresses.
+
+effect: the effect of SSL attack is that the website become unavailable to legitimate user resulting in downtime and potential revenue loss the attack can also cause significant strain on the website resources leading to increase latency and your response time 
+
+mitigation: to mitigate and SSL attack we can implement SSL / DLS termination at the edge of our network using a load balancer or a cdn we can also use at dead or protection service to filter out malaysia's traffic and absorb the attack.
