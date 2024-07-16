@@ -1,0 +1,19 @@
+1. Explain the following types of DDoS attacks?
+Explain the cause, effect, and mitigation for these attacks:
+a. CC (Challenge Collapsar) attack.
+b. SYN Flood attack.
+c. SSL Attack Note:
+Format of the answer should be divided into 4 sections as follows:
+● Cause: (To explain What is the cause of attack)
+● Identify: (To explain How will you identify this attack.)
+● Effect: (To explain What is the effect of this attack.)
+● Mitigation: (To explain How will you mitigate this.) 
+
+
+
+Answer----
+
+a. CC (Challenge Collapsar) attack 
+   cause
+  cc attack targets the application layer by sending high number of HTTP GET or POST request to exhasust the server resources
+
