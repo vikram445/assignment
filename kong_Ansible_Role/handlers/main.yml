@@ -1,0 +1,6 @@
+# handlers/main.yaml
+---
+- name: restart kong
+  service:
+    name: kong
+    state: restarted
