@@ -1,0 +1,18 @@
+# defaults/main.yaml
+---
+kong_source_deb: "/tmp/kong-enterprise-edition-3.2.2.1.amd64.deb"
+kong_conf_dest: "/etc/kong/kong.yml"
+kong_service_state: "started"
+kong_service_status: "status"
+kong_conf_default_path: "/etc/kong/kong.conf.default"
+kong_conf_dest_path: "/etc/kong/kong.conf"
+kong_db_name: kong_db
+kong_db_user: kong_user
+kong_db_password: !vault | $ANSIBLE_VAULT;1.1;AES256 66313238623837306530613161346238313034356364303861333865626433333936336437346462 3231323430666335343732643035393766366436316264630a363031643131306365376537643333 38636433303864356331636436646531383663653436643465613236633364383565613637303332 3139636437376466660a616535663764393031633330643731616461616662393636313731633466 33623836656630393430333837626466646633333537373461623532623963653639
+kong_pg_port: 5432
+kong_dependencies:
+  - netcat
+  - lua5.1
+  - openssl
+  - libpcre3
+  - dnsmasq
