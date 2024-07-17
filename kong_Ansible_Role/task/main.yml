@@ -1,0 +1,86 @@
+# tasks/main.yaml
+---
+- name: Ensure file is absent
+  file:
+    path: /var/lib/apt/lists/lock
+    state: absent
+
+- name: Update system
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: Download Kong Debian Package
+  get_url:
+    url: "https://download.konghq.com/gateway-3.x-ubuntu-{{ ansible_distribution_release }}/pool/all/k/kong-enterprise-edition/kong-enterprise-edition_3.2.2.1_amd64.deb"
+    dest: /tmp/kong-enterprise-edition-3.2.2.1.amd64.deb
+  register: download_result
+
+- name: Install Kong Package
+  apt:
+    deb: "{{ kong_source_deb }}"
+  notify: restart kong
+
+- name: Add PostgreSQL apt repository
+  apt_repository:
+    repo: "deb http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main"
+    state: present
+    update_cache: no
+
+- name: Import PostgreSQL repository signing key
+  shell: "wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -"
+
+- name: Update package lists after adding PostgreSQL repository
+  apt:
+    update_cache: yes
+  when: ansible_os_family == 'Debian'
+
+- name: Install PostgreSQL
+  apt:
+    name: postgresql-14
+    state: present
+
+- name: Check PostgreSQL version
+  command: psql --version
+
+- name: Install psycopg2 Python package
+  become: true
+  apt:
+    name: python3-psycopg2
+    state: present
+
+- name: Ensure the database exists in psql
+  become: true
+  become_user: postgres
+  postgresql_db:
+    name: "{{ kong_db_name }}"
+    state: present
+
+- name: Create Kong user and database
+  become: true
+  become_user: postgres
+  postgresql_user:
+    db: "{{ kong_db_name }}"
+    name: "{{ kong_db_user }}"
+    password: "{{ kong_db_password }}"
+    state: present
+
+- name: Copy Kong configuration file
+  shell: "cp {{ kong_conf_default_path }} {{ kong_conf_dest_path }}"
+
+- name: Configure Kong in Kong configuration file
+  lineinfile:
+    path: /etc/kong/kong.conf
+    line: "{{ item }}"
+  loop:
+    - "admin_listen = 0.0.0.0:8001 reuseport backlog=16384"
+    - "0.0.0.0:8444 http2 ssl reuseport backlog=16384"
+    - "database = postgres"
+    - "pg_host = 127.0.0.1"
+    - "pg_port = {{ kong_pg_port }}"
+    - "pg_user = {{ kong_db_user }}"
+    - "pg_password = {{ kong_db_password }}"
+    - "pg_database = {{ kong_db_name }}"
+
+- name: Set KONG_PASSWORD environment variable
+  shell: "export
